@@ -1,0 +1,9 @@
+{
+  "edition": "Developer",
+  "orgName": "Fortune_Test",
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    }
+  }
+}

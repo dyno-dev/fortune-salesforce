@@ -1,0 +1,14 @@
+{
+  "packageDirectories": [
+    {
+      "path": "force-app",
+      "default": true,
+      "package": "Fortune_Test",
+      "versionName": "Spring '21",
+      "versionNumber": "51.0.0.NEXT"
+    }
+  ],
+  "namespace": "",
+  "sourceApiVersion": "51.0",
+  "packageAliases": {}
+}

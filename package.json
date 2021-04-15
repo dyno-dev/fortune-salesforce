@@ -1,0 +1,67 @@
+{
+  "name": "fortune-salesforce",
+  "author": {
+    "name": "Dynamite Development",
+    "email": "support@dynodev.io",
+    "url": "https://github.com/dyno-dev"
+  },
+  "description": "Salesforce adapter for Fortune.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SyscoCorporation/sf-jsonapi-salesforce-handler.git"
+  },
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:staged": "lint-staged",
+    "test": "npm run lint && node test",
+    "test:setup": "sh test/setup.sh",
+    "prettier": "prettier --write \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
+    "prettier:verify": "prettier --check \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\""
+  },
+  "peerDependencies": {
+    "fortune": "^5.5.17"
+  },
+  "dependencies": {
+    "jsforce": "^1.10.1"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "eslint": "^7.24.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "husky": "^6.0.0",
+    "lint-staged": "^10.5.4",
+    "mkdirp": "^1.0.4",
+    "prettier": "^2.2.1",
+    "tapdance": "^5.1.1"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint:staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint:fix",
+      "git add --force"
+    ]
+  },
+  "keywords": [
+    "fortune",
+    "salesforce",
+    "adapter"
+  ]
+}
