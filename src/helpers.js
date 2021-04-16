@@ -65,7 +65,7 @@ function outputRecord(type, record) {
     (rec, [field, definition]) => {
       const fieldType = definition[typeKey];
 
-      if (record[field] && (fieldType === Date || fieldType === SFDate)) {
+      if (record[field] && fieldType === Date) {
         rec[field] = new Date(record[field]);
         return rec;
       }

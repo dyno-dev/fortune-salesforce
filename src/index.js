@@ -20,19 +20,30 @@ module.exports = (Adapter) =>
    * Setup the Salescorce connection and download all of the foreign key mappings.
    */
   class SalesforceAdapter extends Adapter {
+    constructor(...args) {
+      super(...args);
+      if (!this.options) {
+        this.options = {};
+      }
+
+      if (!('typeMap' in this.options)) {
+        this.options.typeMap = {};
+      }
+
+      if (!('relationshipDelimiter' in this.options)) {
+        this.options.relationshipDelimiter = ':';
+      }
+
+      if (!('maxLimit' in this.options)) {
+        this.options.maxLimit = 1000;
+      }
+    }
+
     connect() {
       const { Promise, options, recordTypes } = this;
       const { loginUrl, version, username, password, clientId, clientSecret, redirectUri } = options;
       const types = Object.keys(recordTypes);
       let jsForceConn = {};
-
-      if (!('typeMap' in options)) {
-        options.typeMap = {};
-      }
-
-      if (!('relationshipDelimiter' in options)) {
-        options.relationshipDelimiter = ':';
-      }
 
       if (!loginUrl || !version || !username || !password) {
         throw new Error(
@@ -108,7 +119,7 @@ module.exports = (Adapter) =>
       if (!options) options = {};
 
       const { recordTypes } = this;
-      const { typeMap, relationshipDelimiter } = this.options;
+      const { typeMap, relationshipDelimiter, maxLimit } = this.options;
       const { primary: primaryKey, isArray: isArrayKey, type: typeKey } = this.keys;
       const query = options.query || ((x) => x);
       const match = options.match || {};
@@ -157,7 +168,7 @@ module.exports = (Adapter) =>
 
       order = order.length ? `ORDER BY ${order.join(', ')}` : '';
 
-      if (options.limit && options.limit !== 50) slice += `LIMIT ${options.limit} `;
+      if (options.limit < maxLimit) slice += `LIMIT ${options.limit} `;
       if (options.offset) slice += `OFFSET ${options.offset} `;
 
       const findRecords = query(`${selectColumns} ${where} ${order} ${slice}`, parameters);
@@ -176,7 +187,7 @@ module.exports = (Adapter) =>
             const formattedError = [{ errors: [err] }].map(outputErrors.bind(this, type));
             reject(formattedError[0]);
           })
-          .run({ maxFetch: options.limit });
+          .run({ maxFetch: maxLimit });
       })
         .then((results) => {
           const data = records.map(outputRecord.bind(this, type));
