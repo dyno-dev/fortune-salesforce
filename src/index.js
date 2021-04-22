@@ -188,14 +188,12 @@ module.exports = (Adapter) =>
             reject(formattedError[0]);
           })
           .run({ maxFetch: maxLimit });
-      })
-        .then((results) => {
-          const data = records.map(outputRecord.bind(this, type));
-          data.count = results.totalSize;
+      }).then((results) => {
+        const data = records.map(outputRecord.bind(this, type));
+        data.count = results.totalSize;
 
-          return data;
-        })
-        .catch((err) => err);
+        return data;
+      });
     }
 
     create(type, records) {

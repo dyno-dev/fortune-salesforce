@@ -256,7 +256,7 @@ function getFuzzyMatches({ type, fuzzyMatch, relationshipDelimiter, defaultField
 function getColumns({ primaryKey, type, defaultFields, foreignKeyMap, options, relationshipDelimiter, meta }) {
   let columns = [primaryKey];
   const defaultFieldNames = Object.keys(defaultFields);
-  const includedRelationships = meta?.request?.query?.include?.split(',');
+  const includedRelationships = meta?.request?.query?.include;
   const includedFields = meta?.request?.query.fields ? meta.request.query.fields[type] : null;
   const optionFields = options.fields ? Object.keys(options.fields).filter((field) => options.fields[field]) : null;
 
@@ -267,9 +267,9 @@ function getColumns({ primaryKey, type, defaultFields, foreignKeyMap, options, r
     columns = columns.concat(includedFields.split(','));
   }
 
-  // No fields were provided by a user, then use default fields
+  // No fields were provided by a user, then use default fields that are not relationship fields
   if (columns.length === 1) {
-    columns = columns.concat(defaultFieldNames);
+    columns = columns.concat(Object.keys(defaultFields).filter((field) => !defaultFields[field].link));
   }
 
   // Include user fields for related relationships
