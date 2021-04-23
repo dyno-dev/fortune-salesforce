@@ -1,5 +1,5 @@
 function SFDate(d) {
-  return d ? new Date(d) : new Date();
+  return d ? new Date(d) : new Date(new Date().toDateString());
 }
 SFDate.prototype = new Date();
 

@@ -394,7 +394,10 @@ module.exports = (adpter, opts) => {
         ])
         .then((records) => {
           assert(typeof records[0].IsOpen__c === 'boolean', 'boolean type is correct');
-          assert(Math.abs(records[0].Opened_Date__c.getTime() - date.getTime()) > 1000, 'date value is correct');
+          assert(
+            Math.abs(new Date(records[0].Opened_Date__c).getTime() - date.getTime()) > 1000,
+            'date value is correct'
+          );
         });
     });
   });
