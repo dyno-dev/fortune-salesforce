@@ -157,13 +157,13 @@ function getMatches({ type, match, relationshipDelimiter, defaultFields }) {
 
     // Check if array and if the first value is a string, assume it's a array of strings
     if (Array.isArray(value) && typeof value[0] === 'string') {
-      where.push(`${field} IN ('${value.join("', '")}')`);
+      where.push(`${field} IN ('${value.map((v) => decodeURIComponent(v)).join("', '")}')`);
     } else if (Array.isArray(value)) {
-      where.push(`${field} IN ('${value.join(', ')}')`);
+      where.push(`${field} IN ('${value.map((v) => decodeURIComponent(v)).join(', ')}')`);
     } else if (typeof value[0] === 'string') {
-      where.push(`${field} = '${value}'`);
+      where.push(`${field} = '${decodeURIComponent(value)}'`);
     } else {
-      where.push(`${field} = ${value}`);
+      where.push(`${field} = ${decodeURIComponent(value)}`);
     }
   });
 
@@ -183,7 +183,7 @@ function getExists({ type, exists, relationshipDelimiter, defaultFields }) {
       field = field.replace(':', '.');
     }
 
-    where.push(`${field} ${value ? 'IS NOT NULL' : 'IS NULL'}`);
+    where.push(`${field} ${value ? '!= NULL' : '= NULL'}`);
   });
 
   return where;
