@@ -44,7 +44,6 @@ const defaultRecords = [
     AccountNumber: 'B13',
     NumberOfEmployees: 36,
     IsOpen__c: false,
-    Opened_Date__c: new SFDate(),
   },
 ];
 
@@ -206,7 +205,7 @@ module.exports = (adpter, opts) => {
         }),
       ]).then((results) => {
         results.forEach((records) => {
-          assert(records.length === 2, 'match length is correct');
+          assert(records.length === 1, 'match length is correct');
           assert(records[0].Name === 'ACME', 'matched correct record');
         });
       })

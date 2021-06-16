@@ -35,7 +35,7 @@ module.exports = (Adapter) =>
       }
 
       if (!('maxLimit' in this.options)) {
-        this.options.maxLimit = 1000;
+        this.options.maxLimit = 200;
       }
     }
 
@@ -168,9 +168,9 @@ module.exports = (Adapter) =>
 
       order = order.length ? `ORDER BY ${order.join(', ')}` : '';
 
-      if (options.limit < maxLimit) slice += `LIMIT ${options.limit} `;
       if (options.offset) slice += `OFFSET ${options.offset} `;
 
+      const maxFetch = options.limit && options.limit < maxLimit ? options.limit : maxLimit;
       const findRecords = query(`${selectColumns} ${where} ${order} ${slice}`, parameters);
 
       const records = [];
@@ -187,7 +187,7 @@ module.exports = (Adapter) =>
             const formattedError = [{ errors: [err] }].map(outputErrors.bind(this, type));
             reject(formattedError[0]);
           })
-          .run({ maxFetch: maxLimit });
+          .run({ maxFetch });
       }).then((results) => {
         const data = records.map(outputRecord.bind(this, type));
         data.count = results.totalSize;

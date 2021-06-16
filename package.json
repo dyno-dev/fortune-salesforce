@@ -6,7 +6,7 @@
     "url": "https://github.com/dyno-dev"
   },
   "description": "Salesforce adapter for Fortune.",
-  "version": "1.0.6",
+  "version": "1.0.10",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
     "lint:fix": "eslint . --fix",
     "lint:staged": "lint-staged",
     "test": "npm run lint && node test",
-    "test:setup": "sh test/setup.sh",
+    "test:setup": "sh test/scratch-org/bin/install-scratch.sh",
     "prettier": "prettier --write \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
     "prettier:verify": "prettier --check \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\""
   },

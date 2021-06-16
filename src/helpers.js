@@ -256,7 +256,7 @@ function getFuzzyMatches({ type, fuzzyMatch, relationshipDelimiter, defaultField
 function getColumns({ primaryKey, type, defaultFields, foreignKeyMap, options, relationshipDelimiter, meta }) {
   let columns = [primaryKey];
   const defaultFieldNames = Object.keys(defaultFields);
-  const includedRelationships = meta?.request?.query?.include;
+  const includedRelationships = meta?.request?.query?.include?.split(',');
   const includedFields = meta?.request?.query.fields ? meta.request.query.fields[type] : null;
   const optionFields = options.fields ? Object.keys(options.fields).filter((field) => options.fields[field]) : null;
 
