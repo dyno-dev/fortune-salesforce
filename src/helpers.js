@@ -260,6 +260,11 @@ function getColumns({ primaryKey, type, defaultFields, foreignKeyMap, options, r
   const includedFields = meta?.request?.query.fields ? meta.request.query.fields[type] : null;
   const optionFields = options.fields ? Object.keys(options.fields).filter((field) => options.fields[field]) : null;
 
+  // Check for inverse Query
+  if (optionFields && optionFields[0]?.startsWith('__')) {
+    return columns;
+  }
+
   // Check for fields provided by the user
   if (optionFields) {
     columns = columns.concat(optionFields);
