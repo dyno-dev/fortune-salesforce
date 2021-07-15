@@ -39,7 +39,7 @@ function inputRecord(type, record) {
 
     const value = record[field];
 
-    if (definition.link) {
+    if (definition.link && typeof value !== 'object') {
       const mappingField = foreignKeyMap[type].get(field);
       rec[mappingField] = value;
     } else if (definition[typeKey] === Date) {

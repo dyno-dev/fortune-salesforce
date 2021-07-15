@@ -15,7 +15,7 @@ sfdx force:org:delete -p -u $ORG_ALIAS &> /dev/null
 echo ""
 
 echo "Creating scratch org..." && \
-sfdx force:org:create -s -f config/project-scratch-def.json -d 30 -a $ORG_ALIAS && \
+sfdx force:org:create -s -f config/project-scratch-def.json hasSampleData=false -d 30 -a $ORG_ALIAS && \
 echo "" && \
 
 echo "Pushing source..." && \
@@ -24,6 +24,14 @@ echo "" && \
 
 echo "Generating password..." && \
 sfdx force:user:password:generate
+echo "" && \
+
+echo "User Info..." && \
+sfdx sfdx force:user:display
+echo "" && \
+
+echo "Opening org..." && \
+sfdx force:org:open -p lightning/n/Property_Explorer
 echo "" && \
 
 EXIT_CODE="$?"
