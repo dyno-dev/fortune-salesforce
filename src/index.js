@@ -146,15 +146,13 @@ module.exports = (Adapter) =>
       const selectColumns = `SELECT ${columns} FROM ${typeMap[type] || type}`;
 
       // Handle Create with External Lookups
-      if (ids && typeof ids === 'object') {
+      if (Array.isArray(ids) && typeof ids[0] === 'object') {
         const key = Object.keys(ids[0])[0];
         const values = ids.map((id) => Object.values(id));
 
         where.push(`${key} IN (${values.map((id) => `'${id}'`).join(', ')})`);
         Array.prototype.push.apply(parameters, ids);
-      }
-
-      if (ids) {
+      } else if (ids) {
         where.push(`${primaryKey} IN (${ids.map((id) => `'${id}'`).join(', ')})`);
         Array.prototype.push.apply(parameters, ids);
       }
